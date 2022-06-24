@@ -1,16 +1,15 @@
-#ifndef FormatInstruction
-#define FormatInstruction
-#undef FormatInstruction
-
+#ifndef FormatInstruction_h
+#define FormatInstruction_h
 #include<string>
-#include<sstream>
-#include<bitset>
+#include<iostream>
 
-// struct throws execption 
 struct notEightDigits {};
+struct unknownBase {};
+struct unknownBitField {};
 
-enum {Binary, Hex, Decimal};
 
+enum Base {Binary, Hex};
+enum Form {RForm,JForm, IForm};
 /*
 	Abstract base class, cannot instantiate and its function memebers
 	will be overridden by derived instances 
@@ -18,51 +17,31 @@ enum {Binary, Hex, Decimal};
 class FormatInstruction 
 {
 	public: 
-		virtual std::string getFormat() = 0; 
 		virtual void printInstr() = 0;
-		std::string getOp; 
-		std::string getRegisters(int digits);
+		FormatInstruction(const std::string &nums, Base baseArg); 
+		virtual ~FormatInstruction(); 
 	protected:
+		// Protected data fields
+		int base; 
+		std::string format; 
 		std::string op;
-		std::stringstream bitfields; 
+		std::string digits; 
+		std::string bitfields;
+		std::string instruction; 
+		// Protected function memebers
+		void convertToBits(const std::string &digits); 
+		void hextToBits(const std::string& digts); 
+		std::string getRegisters(const std::string& digits);
+		virtual std::string getInstructions() = 0;
 };
 
-/*
-	RFormat class inherits from FormatInstruction
-*/
-class RFormat : public FormatInstruction 
-{
-	std::string rs; 
-	std::string rt; 
-	std::string rd;
-	std::string shamt;
-	std::string shamt; 
-	public:
-	
-};
+/* Free function declarations*/
+std::string getOp(const std::string& bits);
 
-/*
-	JFormat class inherits from FormatInstruction 
-*/
+/* Getter function returns enum value denoting format type of the instruction*/
+int getFormat(const std::string& bits);
 
-class JFormat : public  FormatInstruction
-{
-	
+/*String returning function converts hex decimal integers to bits*/
+std::string hextToBits(const std::string& nums); 
 
-};
-
-/*
-	IFormat class inherits form FormatInstruction
-*/
-class IFormat : public FormatInstruction 
-{
-	
-};
-
-
-
-
-#pragma once
-#endif
-
-
+#endif 
