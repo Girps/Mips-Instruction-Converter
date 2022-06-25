@@ -37,7 +37,7 @@ void FormatInstruction::hextToBits(const std::string &nums)
 	// Convert 8 digit hexdecimal value to 32 bit instruciton
 	for (auto it = nums.begin(); it != nums.end(); ++it) 
 	{
-		switch (*it) 
+		switch (std::toupper(*it)) 
 		{
 		case('0'):
 			bits.append("0000");
@@ -230,7 +230,7 @@ else
 std::string getOp(const std::string& bits)
 {
 	std::string temp;
-	for (auto it = bits.rbegin(); it != bits.rend(); ++it)
+	for (auto it = bits.begin(); it != bits.end(); ++it)
 	{
 		temp.push_back(*it);
 	}
@@ -244,7 +244,7 @@ std::string hextToBits(const std::string & nums)
 	// Convert 8 digit hexdecimal value to 32 bit instruciton
 	for (auto it = nums.begin(); it != nums.end(); ++it)
 	{
-		switch (*it)
+		switch (std::toupper(*it))
 		{
 		case('0'):
 			bits.append("0000");

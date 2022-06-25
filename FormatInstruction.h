@@ -23,7 +23,6 @@ class FormatInstruction
 	protected:
 		// Protected data fields
 		int base; 
-		std::string format; 
 		std::string op;
 		std::string digits; 
 		std::string bitfields;
