@@ -2,11 +2,10 @@
 #include "FormatInstruction.h"
 #include "RFormat.h"
 #include "JFormat.h"
+#include "IFormat.h"
 #include <memory>
 int main() 
 {
-		std::string o = "1111111111111111111111111111111";
-		printf("%d", (~((unsigned int)std::stoi(o,nullptr,2))) + 1);
 		std::string digit;
 		std::cout << "Enter an 8 bit hexdecimal value to be converted into a MIPS instruction\n";
 		std::cin >> digit;
@@ -29,6 +28,8 @@ int main()
 			break;
 		case(IForm):
 			printf("I Format");
+			smrtPtr = std::make_unique<IFormat>(IFormat(digit, Hex)); 
+			smrtPtr->printInstr(); 
 			break;
 		}
 		return 0; 
