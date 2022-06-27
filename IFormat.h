@@ -2,7 +2,7 @@
 #define IFormat_h
 #include "FormatInstruction.h"
 
-struct unKnownIInstr {}; 
+struct unKnownIInstruction {}; 
 
 enum AddressMode {ImmediateAddressing,BaseAddressing,RelativeAddress};
 

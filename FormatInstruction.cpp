@@ -25,7 +25,7 @@ void FormatInstruction::convertToBits(const std::string &nums )
 			 hextToBits(nums);
 			break; 
 		default: 
-			throw unknownBase(); 
+			throw unKnownBase(); 
 			break; 
 	}
 }
@@ -33,9 +33,16 @@ void FormatInstruction::convertToBits(const std::string &nums )
 /*Void setter function sets bitfields members to binary dights from hex*/
 void FormatInstruction::hextToBits(const std::string &nums)
 {
-	std::string bits; 
+	std::string bits;
+	std::string temp = nums;
+	// If size 10 remove first two chars 
+	if (temp.size() == 10)
+	{
+		temp.erase(0, 1);
+		temp.erase(0, 1);
+	}
 	// Convert 8 digit hexdecimal value to 32 bit instruciton
-	for (auto it = nums.begin(); it != nums.end(); ++it) 
+	for (auto it = temp.begin(); it != temp.end(); ++it) 
 	{
 		switch (std::toupper(*it)) 
 		{
@@ -88,7 +95,7 @@ void FormatInstruction::hextToBits(const std::string &nums)
 			bits.append("1111");
 				break;
 		default: // Error 
-			throw unknownBitField();
+			throw unKnownBitField();
 				break; 
 		}
 	}
@@ -101,7 +108,7 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 {
 	if (bits.size() > 5) 
 	{
-		throw unknownBitField(); 
+		throw unKnownBitField(); 
 	}
 	int regValue{ 0 }; 
 	regValue = std::stoi(bits,nullptr,2); 
@@ -204,7 +211,7 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 		return "$ra";
 		break;
 	default:	// throw an exception
-		throw unknownBitField(); 
+		throw unKnownBitField(); 
 		break;
 	}
 }
@@ -213,18 +220,85 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
  int getFormat(const std::string& bits)
 {
 // If opcode is all zero 
-if (bits == "000000")
-{
+	if (bits == "000000")
+	{
 	return RForm;
-} // JFormat have 2 or 3 opcode
-else if (bits == "000011" || bits == "000010")
-{
+	} // JFormat have 2 or 3 opcode
+	else if (bits == "000011" || bits == "000010")
+	{
 	return JForm;
-} // Other bit value is IFormat
-else
-{
-	return IForm;
-}
+	} // Other bit value is IFormat
+	else
+	{
+		Form type = IForm; 
+		switch (std::stoi(bits, nullptr, 2))
+		{
+		case(4):
+			type = IForm;
+			break;
+		case(5):
+			type = IForm;
+			break;
+		case(6):
+			type = IForm;
+			break;
+		case(7):
+			type = IForm;
+			break;
+		case(8):
+			type = IForm;
+			break;
+		case(9):
+			type = IForm;
+			break;
+		case(10):
+			type = IForm;
+			break;
+		case(11):
+			type = IForm;
+			break;
+		case(12):
+			type = IForm;
+			break;
+		case(13):
+			type = IForm;
+			break;
+		case(14):
+			type = IForm;
+			break;
+		case(15):
+			type = IForm;
+			break;
+		case(32):
+			type = IForm;
+			break;
+		case(33):
+			type = IForm;
+			break;
+		case(35):
+			type = IForm;
+			break;
+		case(36):
+			type = IForm;
+			break;
+		case(37):
+			type = IForm;
+			break;
+		case(40):
+			type = IForm;
+			break;
+		case(41):
+			type = IForm;
+			break;
+		case(43):
+			type = IForm;
+			break;
+		default: // throw error
+			unKnownBitField();
+			break;
+		}
+		return type; 
+	}
 }
 
 std::string getOp(const std::string& bits)
@@ -241,8 +315,16 @@ std::string getOp(const std::string& bits)
 std::string hextToBits(const std::string & nums)
 {
 	std::string bits;
+	std::string temp = nums; 
+	// check if size is 10 to truncate front bits
+	if (temp.size() == 10) 
+	{
+		temp.erase(0, 1);
+		temp.erase(0,1);
+	}
+
 	// Convert 8 digit hexdecimal value to 32 bit instruciton
-	for (auto it = nums.begin(); it != nums.end(); ++it)
+	for (auto it = temp.begin(); it != temp.end(); ++it)
 	{
 		switch (std::toupper(*it))
 		{
@@ -295,7 +377,7 @@ std::string hextToBits(const std::string & nums)
 			bits.append("1111");
 			break;
 		default: // Error 
-			throw unknownBitField();
+			throw unKnownBitField();
 			break;
 		}
 	}

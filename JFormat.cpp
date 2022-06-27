@@ -107,7 +107,7 @@ std::string JFormat::getHex(int num)
 			temp.push_back('F');
 			break; 
 		default: 
-			throw unknownBase(); 
+			throw unKnownBase(); 
 			break; 
 		}
 	}

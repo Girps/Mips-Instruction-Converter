@@ -2,7 +2,7 @@
 #define RFormat_h
 #include "FormatInstruction.h"
 
-struct unknownFunction {};
+struct unKnownRFunction {};
 
 /*
 	RFormat class inherits from FormatInstruction

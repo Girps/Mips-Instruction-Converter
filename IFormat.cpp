@@ -60,7 +60,15 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += getHex((convertImmediate(RelativeAddress) * 4)); 
+		instr += "(PC + 0x4 + "; 
+		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += ")\n"; 
+		instr += "beq ";
+		instr += getRegisters(this->rs);
+		instr += ",";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += "label"; 
 		break; 
 	case(5):
 		instr += "bne ";
@@ -68,19 +76,47 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rt);
 		instr += ",";
+		instr += "(PC + 0x4 + ";
 		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += ")\n";
+		instr += "beq ";
+		instr += getRegisters(this->rs);
+		instr += ",";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += "label";
 		break;
 	case(6):
 		instr += "blez ";
 		instr += getRegisters(this->rs);
 		instr += ",";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += "(PC + 0x4 + ";
 		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += ")\n";
+		instr += "beq ";
+		instr += getRegisters(this->rs);
+		instr += ",";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += "label";
 		break;
 	case(7):
 		instr += "bgtz ";
 		instr += getRegisters(this->rs);
 		instr += ",";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += "(PC + 0x4 + ";
 		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += ")\n";
+		instr += "beq ";
+		instr += getRegisters(this->rs);
+		instr += ",";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += "label";
 		break; 
 	case(8):
 		instr += "addi ";
@@ -162,7 +198,7 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rs);
 		instr += ")";
 		break;
-	case(0x23):
+	case(35):
 		instr += "lw ";
 		instr += getRegisters(this->rt);
 		instr += ",";
@@ -217,7 +253,7 @@ std::string IFormat::getInstructions()
 		instr += ")";
 		break;
 	default: // throw error
-		struct unKnownIInstr();
+		struct unKnownIInstruction();
 		break; 
 	}
 	return instr; 
@@ -283,7 +319,7 @@ std::string IFormat::getHex(int num)
 			temp.push_back('F');
 			break;
 		default:
-			throw unknownBase();
+			throw unKnownBase();
 			break;
 		}
 	}

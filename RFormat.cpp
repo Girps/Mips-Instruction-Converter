@@ -214,7 +214,7 @@ RFormat::~RFormat() {}
 		 instr += this->getRegisters(this->rt);
 		 break;
 	 default: // unknownFunction bit field
-		 throw unknownFunction();
+		 throw unKnownRFunction();
 		 break;
 	 }
 	 this->instruction = instr; 

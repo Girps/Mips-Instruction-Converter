@@ -4,8 +4,8 @@
 #include<iostream>
 
 struct notEightDigits {};
-struct unknownBase {};
-struct unknownBitField {};
+struct unKnownBase {};
+struct unKnownBitField {};
 
 
 enum Base {Binary, Hex};
