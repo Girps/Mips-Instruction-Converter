@@ -1,5 +1,10 @@
 #include "IFormat.h"
 
+/*
+	File: IFormat.cpp defines IFormat function memebers
+	and override abstract base memeber FormatInstruction
+*/
+
 /*Initalize base and derived members */
 IFormat::IFormat(const std::string &digits, Base baseArg)
 	:FormatInstruction(digits,baseArg)
@@ -18,7 +23,7 @@ IFormat::~IFormat() {}
 /* Print I Format instructions*/
 void IFormat::printInstr() 
 {
-	std::cout << "\nHex:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
+	std::cout << "\nNumber:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
 		<< this->op << "|" << this->rs << "|" << this->rt << "|" << this->immediate <<
 		"\nI-format\n" << "op == " << this->op << "\n" << "rs == " << this->rs << "\n" << 
 		"rt == " << this->rt << "\nimmediate == " << this->immediate << "\n" <<
@@ -26,7 +31,8 @@ void IFormat::printInstr()
 
 }
 
-/*string returning functions returns decimal value of immediate bitfield*/ 
+/*string returning functions returns decimal value of immediate bitfield
+	depending on its addressing modes*/ 
 int IFormat::convertImmediate(AddressMode arg) 
 {
 	int exp = 15; 

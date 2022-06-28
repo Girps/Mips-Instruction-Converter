@@ -1,6 +1,15 @@
 #include "JFormat.h"
 
+/*
+	File: JFormat.cpp define JFormat type that will serve
+	as an derived class of abstract base FormatInstruction class 
+	class represents J type instructions and overrided virtual 
+	function from base class. 
+*/
 
+
+/*JFormat constructor calls base constructor to initalize base memebers
+	and initliazes its own members */ 
 JFormat::JFormat(const std::string& digits, Base baseArg)
 	:FormatInstruction(digits, baseArg)
 {
@@ -11,17 +20,17 @@ JFormat::JFormat(const std::string& digits, Base baseArg)
 
 JFormat::~JFormat() {}
 
-/*Void function prints J Format instruction*/
+/*Void overried member function prints J Format instruction*/
 void JFormat::printInstr()
 {
-	std::cout << "\nHex:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
+	std::cout << "\nNumber:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
 		<< this->op << "|" << this->immediate << "\n" << "J-format\n" << "op == " << this->op << "\n"
 		<< "Immediate == " << this->immediate << "\nDec Immediate == " << std::stoi(this->immediate, nullptr, 2)
 		<< "\nMultiply by 4 or SLL by 2 immediate == " << (std::stoi(this->immediate, nullptr, 2) * 4)
 		<< "\n" << "Instruction: " << this->instruction;
 }
 
-/*string returning function checks memebers and returns instruction and immediate*/
+/*String returning overrided memberfunction checks memebers and returns instruction and its immediate*/
 std::string JFormat::getInstructions()
 {
 	std::string instr; 
@@ -48,6 +57,8 @@ std::string JFormat::getInstructions()
 	return instr; 
 }
 
+/*String returning member function converts a int decimal into hex string
+	and "signed extends" to 32-bits */ 
 std::string JFormat::getHex(int num)
 {
 	int numbers = 0;
@@ -115,6 +126,7 @@ std::string JFormat::getHex(int num)
 	temp.push_back('0');
 	temp.push_back('x');
 	temp.push_back('0');
+
 	// Now reverse a string
 	int i = 0;
 	int j = temp.size()- 1; 

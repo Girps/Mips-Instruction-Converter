@@ -4,6 +4,13 @@
 #include "JFormat.h"
 #include "IFormat.h"
 #include <memory>
+/*
+	Author: Jesse Jimenez
+	Date: 6/27/2022
+	Purpose: Enter a 8 digit hexadecimal value or 32-bit binary sequence to be converted into a
+	32-bit MIPs instruction. 
+*/
+
 int main() 
 {
 		std::string digit;
@@ -12,18 +19,26 @@ int main()
 		std::unique_ptr<FormatInstruction> smrtPtr;
 		int sent = 0;
 		int value = 0; 
+		Base baseNumber = Hex; 
 
 		do {
 
-			std::cout << "\n\nEnter an 8 bit hexdecimal value to be converted into a 32-bit MIPS instruction terminate with 'q'\n";
+			std::cout << "\n\nEnter a 8 bit hexdecimal value or 32-bit binary number to be converted into a 32-bit MIPS instruction\n" <<
+				"terminate program with 'q'\n";
 			std::cin >> digit; 
 			system("cls");
 			// check if size is valid if not check if its a terminating char if not set -1 
-			if (digit.size() == 8 || digit.size() == 10 || digit.size() == 32) 
+			if (digit.size() == 8 || digit.size() == 10) 
 			{
 				bit = hextToBits(digit);
-				op = getOp(bit.substr(0, 6));
+				op = bit.substr(0, 6); 
 				value = getFormat(op);	
+			}
+			else if (digit.size() == 32) 
+			{
+				op = digit.substr(0, 6);
+				value = getFormat(op);
+				baseNumber = Binary; 
 			}
 			else if (digit[0] == 'q' && digit.size() == 1)
 			{
@@ -38,17 +53,17 @@ int main()
 			switch (value)
 			{
 			case(RForm):
-				smrtPtr = std::make_unique<RFormat>(RFormat(digit, Binary));
+				smrtPtr = std::make_unique<RFormat>(RFormat(digit, baseNumber));
 				smrtPtr->printInstr();
 				break;
 			case(JForm):
 				printf("J Format");
-				smrtPtr = std::make_unique<JFormat>(JFormat(digit, Binary));
+				smrtPtr = std::make_unique<JFormat>(JFormat(digit, baseNumber));
 				smrtPtr->printInstr();
 				break;
 			case(IForm):
 				printf("I Format");
-				smrtPtr = std::make_unique<IFormat>(IFormat(digit, Binary));
+				smrtPtr = std::make_unique<IFormat>(IFormat(digit, baseNumber));
 				smrtPtr->printInstr();
 				break;
 			case((int)'q'):

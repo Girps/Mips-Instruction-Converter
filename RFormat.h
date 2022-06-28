@@ -2,11 +2,19 @@
 #define RFormat_h
 #include "FormatInstruction.h"
 
-struct unKnownRFunction {};
 
 /*
-	RFormat class inherits from FormatInstruction
+	File: RFormat.h declare RFormat type that will inherits members
+	of abstract type Format instruction and its function members.
+	Derived class represents and R type of instruction that holds
+	5 bitfields that represents a 32 bit instruction. 
 */
+
+
+struct unKnownRFunction {};
+
+/* Derived RFormat class inherits from abstract base class 
+	FormatInstruction */ 
 class RFormat : public FormatInstruction
 {
 	// Data fields of R Format instruction  

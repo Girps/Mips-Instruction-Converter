@@ -3,17 +3,20 @@
 #include<string>
 #include<iostream>
 
+/*
+	Abstract base class declaration. Every Mips instruction is denoted
+	by bitfields with one field called op which are denoted from a 
+	seqeunce of 8 digit Hex or 32 Binary digits.  
+*/
+
 struct notEightDigits {};
 struct unKnownBase {};
 struct unKnownBitField {};
 
-
 enum Base {Binary, Hex};
 enum Form {RForm,JForm, IForm};
-/*
-	Abstract base class, cannot instantiate and its function memebers
-	will be overridden by derived instances 
-*/
+
+/*Abstract base class declaration */
 class FormatInstruction 
 {
 	public: 
@@ -34,13 +37,8 @@ class FormatInstruction
 		virtual std::string getInstructions() = 0;
 };
 
-/* Free function declarations*/
-std::string getOp(const std::string& bits);
-
-/* Getter function returns enum value denoting format type of the instruction*/
+/*Free function declarations */
 int getFormat(const std::string& bits);
-
-/*String returning function converts hex decimal integers to bits*/
 std::string hextToBits(const std::string& nums); 
 
 #endif 

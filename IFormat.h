@@ -2,10 +2,21 @@
 #define IFormat_h
 #include "FormatInstruction.h"
 
+/*
+	File: IFomat.h 
+	IFormat declaration public inherits from abstract
+	FormatInstruction class, While contains its own 3 
+	bit fields. File contains enums AddressMode as I-
+	type instruction have 3 types of addressing modes
+	that determine the string instruction sequence. 
+*/
+
 struct unKnownIInstruction {}; 
 
 enum AddressMode {ImmediateAddressing,BaseAddressing,RelativeAddress};
 
+/* Derived class IFormat declaration inherits from abstract
+	base class FormatInstruction*/
 class IFormat : public FormatInstruction
 {
 	// I Formats data fields

@@ -1,7 +1,15 @@
 #include "RFormat.h"
 #include<string>
 
-/* RFormat constructor calls base constructor and intializes data memebers */
+/*
+	File: RFormat.cpp define RFormat type that will inherits members
+	of abstract type Format instruction and its function members. 
+	getInstruction() and printInstr() are overidden. 
+*/
+
+
+/* RFormat constructor calls base constructor and intializes data members
+	of 5 distinct bit fields*/
 RFormat::RFormat(const std::string &nums,Base baseArg)
 	:FormatInstruction(nums,baseArg)
 {
@@ -224,7 +232,7 @@ RFormat::~RFormat() {}
 /* Overloaded function memeber prints instruction of 8 bit instruction*/
  void RFormat::printInstr() 
  {
-	 std::cout << "Hex:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
+	 std::cout << "Number:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
 		 << this->op << "|" << this->rs << "|" << this->rt << "|" << this->rd << "|" << this->shamt
 		 << "|" << this->funct << "\n" << "R-format\n" <<"op == " << this->op << "\n" <<
 		 "rs == " << this->rs << "\n" << "rt == " << this->rt

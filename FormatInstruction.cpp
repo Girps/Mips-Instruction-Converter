@@ -1,10 +1,37 @@
 #include "FormatInstruction.h"
 
+/*
+	File: FormatInstruction.cpp define FormtInstruction type that will serve
+	as an abstract base class with it data members and function members to 
+	be inhierted by base classes: RFormat,IFormat and JFormat. Format Instruc-
+	tion represents a 32-bit mips instruction that includes a registers, 
+	instruction and address computation
+*/
 
-
+/*FormatInstruction constructor takes a sequence of digits and an Enum Base type 
+	and initialzes data members with arguments */ 
 FormatInstruction::FormatInstruction(const std::string &nums, Base baseArgs)
 	:base{ baseArgs }, digits{nums}
 {
+	// Check base number is valid
+	switch(base)
+	{
+	case(Hex): 
+		if (nums.size() != 8 && nums.size() != 10 ) 
+		{
+			throw unKnownBase();
+		}
+		break; 
+	case(Binary):
+		if (nums.size() != 32)
+		{
+			throw unKnownBase();
+		}
+		break; 
+	default: 
+		throw unKnownBase(); 
+		break; 
+	}
 	// Call protected functions initalize rest of memebers
 	convertToBits(digits); // set bitfield
 	op = bitfields.substr(0,6); 
@@ -30,11 +57,11 @@ void FormatInstruction::convertToBits(const std::string &nums )
 	}
 }
 
-/*Void setter function sets bitfields members to binary dights from hex*/
-void FormatInstruction::hextToBits(const std::string &nums)
+/*Void setter function sets bitfields members to binary dights converted from hex sequence nums*/
+void FormatInstruction::hextToBits(const std::string &hexString)
 {
 	std::string bits;
-	std::string temp = nums;
+	std::string temp = hexString;
 	// If size 10 remove first two chars 
 	if (temp.size() == 10)
 	{
@@ -103,15 +130,20 @@ void FormatInstruction::hextToBits(const std::string &nums)
 }
 
 
-// Getter function converts bits into registers and returns 
+/*string returning function member converts sequence of bits into a register
+	and return as a string */ 
 std::string FormatInstruction::getRegisters(const std::string &bits) 
 {
-	if (bits.size() > 5) 
+	// 32-bit Mips registers are 5 bits 
+	if (bits.size() != 5) 
 	{
 		throw unKnownBitField(); 
 	}
+
 	int regValue{ 0 }; 
 	regValue = std::stoi(bits,nullptr,2); 
+
+	// Denote binary value to register to  be returned
 	switch (regValue) 
 	{
 	case(0):
@@ -216,7 +248,8 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 	}
 }
 
-/* Getter function returns enum value denoting format type of the instruction*/
+/* string returning free function returns an interger denoting a Base type to
+	determine the instruction format from a 6-bit sequence */
  int getFormat(const std::string& bits)
 {
 // If opcode is all zero 
@@ -301,17 +334,8 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 	}
 }
 
-std::string getOp(const std::string& bits)
-{
-	std::string temp;
-	for (auto it = bits.begin(); it != bits.end(); ++it)
-	{
-		temp.push_back(*it);
-	}
-	return temp;
-}
-
-/*Void setter function sets bitfields members to binary dights from hex */
+/*string returning free function converts integers into a sequence of Hex digits 
+	and returns as a string*/
 std::string hextToBits(const std::string & nums)
 {
 	std::string bits;
@@ -323,7 +347,7 @@ std::string hextToBits(const std::string & nums)
 		temp.erase(0,1);
 	}
 
-	// Convert 8 digit hexdecimal value to 32 bit instruciton
+	// Convert 8 digit hexdecimal value to 32 bit binary sequence
 	for (auto it = temp.begin(); it != temp.end(); ++it)
 	{
 		switch (std::toupper(*it))
