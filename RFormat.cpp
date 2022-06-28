@@ -100,6 +100,17 @@ RFormat::~RFormat() {}
 		 break; 
 	 case(12):	
 		 instr = "syscall"; 
+		 break;
+	 case(13): 
+		 instr = "break ";
+		 if ((std::stoi(this->rs + this->rt + this->rd + this->shamt, nullptr, 2) == 0))
+		 {
+			instr += " ";
+		 }
+		 else 
+		 {
+			 instr += std::to_string(((std::stoi(this->rs + this->rt + this->rd + this->shamt, nullptr, 2))));
+		 }
 		 break; 
 	 case(16): 
 		 instr = "mfhi "; 
@@ -221,9 +232,45 @@ RFormat::~RFormat() {}
 		 instr += " , ";
 		 instr += this->getRegisters(this->rt);
 		 break;
+	 case(48):
+		 instr = "tge "; 
+		 instr += this->getRegisters(this->rs);
+		 instr += " , "; 
+		 instr += this->getRegisters(this->rt); 
+		 break;
+	 case(49): 
+		 instr = "tgeu ";
+		 instr += this->getRegisters(this->rs);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rt);
+		 break; 
+	 case(50):
+		 instr = "tlt "; 
+		 instr += this->getRegisters(this->rs);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rt);
+		 break;
+	 case(51):
+		 instr = "tltu "; 
+		 instr += this->getRegisters(this->rs);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rt);
+		 break; 
 	 default: // unknownFunction bit field
 		 throw unKnownRFunction();
 		 break;
+	 case(52):
+		 instr = "teq "; 
+		 instr += this->getRegisters(this->rs);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rt);
+		 break; 
+	 case(54):
+		 instr = "tne ";
+		 instr += this->getRegisters(this->rs);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rt);
+		 break; 
 	 }
 	 this->instruction = instr; 
 	 return instr; 

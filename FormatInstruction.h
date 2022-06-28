@@ -34,6 +34,7 @@ class FormatInstruction
 		void convertToBits(const std::string &digits); 
 		void hextToBits(const std::string& digts); 
 		std::string getRegisters(const std::string& digits);
+		std::string getFPRegisters(const std::string& digits);
 		virtual std::string getInstructions() = 0;
 };
 

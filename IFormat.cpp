@@ -204,6 +204,15 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rs);
 		instr += ")";
 		break;
+	case(34): 
+		instr += "lwl "; 
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+			break; 
 	case(35):
 		instr += "lw ";
 		instr += getRegisters(this->rt);
@@ -231,6 +240,15 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rs);
 		instr += ")";
 		break; 
+	case(38):
+		instr += "lwr ";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break; 
 	case(40):
 		instr += "sb ";
 		instr += getRegisters(this->rt);
@@ -248,6 +266,15 @@ std::string IFormat::getInstructions()
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
+		break;
+	case(42):
+		instr += "swl ";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
 		break; 
 	case(43):
 		instr += "sw ";
@@ -258,7 +285,71 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rs);
 		instr += ")";
 		break;
+	case(46): 
+		instr += "swr ";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break;
+	case(48):
+		instr += "ll "; 
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break; 
+	case(49):
+		instr += "lwc1 ";
+		instr += getFPRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break;
+	case(53):
+		instr += "lwd1 ";
+		instr += getFPRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break;
+	case(56):
+		instr += "sc ";
+		instr += getRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break;
+	case(57):
+		instr += "swc1 ";
+		instr += getFPRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break; 
+	case(61):
+		instr += "sdc1 ";
+		instr += getFPRegisters(this->rt);
+		instr += ",";
+		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += "(";
+		instr += getRegisters(this->rs);
+		instr += ")";
+		break;
 	default: // throw error
+
 		struct unKnownIInstruction();
 		break; 
 	}

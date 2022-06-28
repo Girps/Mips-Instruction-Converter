@@ -130,6 +130,124 @@ void FormatInstruction::hextToBits(const std::string &hexString)
 }
 
 
+/*string returning function member converts sequence of bits into a fp register
+	and return as a string */
+std::string FormatInstruction::getFPRegisters(const std::string& bits)
+{
+	// 32-bit Mips registers are 5 bits 
+	if (bits.size() != 5)
+	{
+		throw unKnownBitField();
+	}
+
+	int regValue{ 0 };
+	regValue = std::stoi(bits, nullptr, 2);
+
+	// Denote binary value to register to  be returned
+	switch (regValue)
+	{
+	case(0):
+		return "$f0";
+		break;
+	case(1):
+		return "$f1";
+		break;
+	case(2):
+		return "$f2";
+		break;
+	case(3):
+		return "$f3";
+		break;
+	case(4):
+		return "$f4";
+		break;
+	case(5):
+		return "$f5";
+		break;
+	case(6):
+		return "$f6";
+		break;
+	case(7):
+		return "$f7";
+		break;
+	case(8):
+		return "$f8";
+		break;
+	case(9):
+		return "$f9";
+		break;
+	case(10):
+		return "$f10";
+		break;
+	case(11):
+		return "$f11";
+		break;
+	case(12):
+		return "$f12";
+		break;
+	case(13):
+		return "$f13";
+		break;
+	case(14):
+		return "$f14";
+		break;
+	case(15):
+		return "$f15";
+		break;
+	case(16):
+		return "$f16";
+		break;
+	case(17):
+		return "$f17";
+		break;
+	case(18):
+		return "$f18";
+		break;
+	case(19):
+		return "$f19";
+		break;
+	case(20):
+		return "$f20";
+		break;
+	case(21):
+		return "$f21";
+		break;
+	case(22):
+		return "$f22";
+		break;
+	case(23):
+		return "$f23";
+		break;
+	case(24):
+		return "$f24";
+		break;
+	case(25):
+		return "$f25";
+		break;
+	case(26):
+		return "$f26";
+		break;
+	case(27):
+		return "$f27";
+		break;
+	case(28):
+		return "$f28";
+		break;
+	case(29):
+		return "$f29";
+		break;
+	case(30):
+		return "$f30";
+		break;
+	case(31):
+		return "$f31";
+		break;
+	default:	// throw an exception
+		throw unKnownBitField();
+		break;
+	}
+}
+
 /*string returning function member converts sequence of bits into a register
 	and return as a string */ 
 std::string FormatInstruction::getRegisters(const std::string &bits) 
