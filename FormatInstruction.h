@@ -14,7 +14,7 @@ struct unKnownBase {};
 struct unKnownBitField {};
 
 enum Base {Binary, Hex};
-enum Form {RForm,JForm, IForm};
+enum Form {RForm,JForm, IForm,FRForm};
 
 /*Abstract base class declaration */
 class FormatInstruction 

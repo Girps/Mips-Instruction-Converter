@@ -3,6 +3,7 @@
 #include "RFormat.h"
 #include "JFormat.h"
 #include "IFormat.h"
+#include "FRFormat.h"
 #include <memory>
 /*
 	Author: Jesse Jimenez
@@ -67,6 +68,12 @@ int main()
 					smrtPtr = std::make_unique<IFormat>(IFormat(digit, baseNumber));
 					smrtPtr->printInstr();
 					break;
+				case(FRForm):
+					printf("FR Fromat");
+					smrtPtr = std::make_unique<FRFormat>(FRFormat(digit, baseNumber));
+					smrtPtr->printInstr();
+					break; 
+					break; 
 				case((int)'q'):
 					sent = 1;
 					std::cout << "Program terminated\n";

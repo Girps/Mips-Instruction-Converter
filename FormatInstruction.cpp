@@ -370,19 +370,25 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 	determine the instruction format from a 6-bit sequence */
  int getFormat(const std::string& bits)
 {
-// If opcode is all zero 
-	if (bits == "000000")
+	 int opcode = std::stoi(bits, nullptr, 2);
+	// If opcode is all zero 
+	if (opcode == 0)
 	{
 	return RForm;
-	} // JFormat have 2 or 3 opcode
-	else if (bits == "000011" || bits == "000010")
+	}
+	else if (opcode == 17) 
+	{
+		return FRForm; 
+	}
+	// JFormat have 2 or 3 opcode
+	else if (opcode == 3|| opcode == 2)
 	{
 	return JForm;
 	} // Other bit value is IFormat
 	else
 	{
 		Form type = IForm; 
-		switch (std::stoi(bits, nullptr, 2))
+		switch (opcode)
 		{
 		case(4):
 			type = IForm;
