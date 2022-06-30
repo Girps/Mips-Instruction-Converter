@@ -66,7 +66,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += "(PC + 0x4 + "; 
+		instr += "(PC + 4 + "; 
 		instr += getHex((convertImmediate(RelativeAddress) * 4));
 		instr += ")\n"; 
 		instr += "beq ";
@@ -82,7 +82,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += "(PC + 0x4 + ";
+		instr += "(PC + 4 + ";
 		instr += getHex((convertImmediate(RelativeAddress) * 4));
 		instr += ")\n";
 		instr += "beq ";
@@ -98,7 +98,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += "(PC + 0x4 + ";
+		instr += "(PC + 4 + ";
 		instr += getHex((convertImmediate(RelativeAddress) * 4));
 		instr += ")\n";
 		instr += "beq ";
@@ -114,7 +114,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += "(PC + 0x4 + ";
+		instr += "(PC + 4 + ";
 		instr += getHex((convertImmediate(RelativeAddress) * 4));
 		instr += ")\n";
 		instr += "beq ";
@@ -349,7 +349,6 @@ std::string IFormat::getInstructions()
 		instr += ")";
 		break;
 	default: // throw error
-
 		struct unKnownIInstruction();
 		break; 
 	}
@@ -420,10 +419,16 @@ std::string IFormat::getHex(int num)
 			break;
 		}
 	}
-	temp.push_back('0');
-	temp.push_back('0');
+
+	// Extend to 8 bit
+	for (int offset = 8 - temp.size(); offset >= temp.size();) 
+	{
+		temp.push_back('0');
+	}
+	// Push prefix 
 	temp.push_back('x');
 	temp.push_back('0');
+
 	// Now reverse a string
 	int i = 0;
 	int j = temp.size() - 1;

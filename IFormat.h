@@ -20,14 +20,17 @@ enum AddressMode {ImmediateAddressing,BaseAddressing,RelativeAddress};
 class IFormat : public FormatInstruction
 {
 	// I Formats data fields
-	std::string rs;
+	
+	// Inheirted memebers for FI type
+	protected: 
 	std::string rt;
+	std::string rs;
 	std::string immediate;
 	int convertImmediate(AddressMode arg ); 
 	std::string getHex(int num);
 	public:
 		IFormat(const std::string &digits, Base baseArg); 
-		~IFormat();
+		virtual ~IFormat();
 		std::string getInstructions() override;
 		void printInstr() override;
 }; 

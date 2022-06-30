@@ -4,6 +4,7 @@
 #include "JFormat.h"
 #include "IFormat.h"
 #include "FRFormat.h"
+#include "FIFormat.h"
 #include <memory>
 /*
 	Author: Jesse Jimenez
@@ -33,13 +34,11 @@ int main()
 				if (digit.size() == 8 || digit.size() == 10)
 				{
 					bit = hextToBits(digit);
-					op = bit.substr(0, 6);
-					value = getFormat(op);
+					value = getFormat(bit);
 				}
 				else if (digit.size() == 32)
 				{
-					op = digit.substr(0, 6);
-					value = getFormat(op);
+					value = getFormat(digit);
 					baseNumber = Binary;
 				}
 				else if (digit[0] == 'q' && digit.size() == 1)
@@ -69,10 +68,14 @@ int main()
 					smrtPtr->printInstr();
 					break;
 				case(FRForm):
-					printf("FR Fromat");
+					printf("FR Format");
 					smrtPtr = std::make_unique<FRFormat>(FRFormat(digit, baseNumber));
 					smrtPtr->printInstr();
-					break; 
+					break;
+				case(FIForm):
+					printf("FI Format");
+					smrtPtr = std::make_unique<FIFormat>(FIFormat(digit, baseNumber));
+					smrtPtr->printInstr();
 					break; 
 				case((int)'q'):
 					sent = 1;

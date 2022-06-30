@@ -18,6 +18,7 @@ struct unKnownRFunction {};
 class RFormat : public FormatInstruction
 {
 	// Data fields of R Format instruction  
+protected: 
 	std::string rs;
 	std::string rt;
 	std::string rd;
@@ -25,7 +26,7 @@ class RFormat : public FormatInstruction
 	std::string funct;
 public:
 	RFormat(const std::string& args, Base baseArg);
-	~RFormat();
+	virtual ~RFormat();
     std::string getInstructions()  override;
 	void printInstr() override;
 };

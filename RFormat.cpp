@@ -256,9 +256,6 @@ RFormat::~RFormat() {}
 		 instr += " , ";
 		 instr += this->getRegisters(this->rt);
 		 break; 
-	 default: // unknownFunction bit field
-		 throw unKnownRFunction();
-		 break;
 	 case(52):
 		 instr = "teq "; 
 		 instr += this->getRegisters(this->rs);
@@ -270,7 +267,10 @@ RFormat::~RFormat() {}
 		 instr += this->getRegisters(this->rs);
 		 instr += " , ";
 		 instr += this->getRegisters(this->rt);
-		 break; 
+		 break;
+	 default: // unknownFunction bit field
+		 throw unKnownRFunction();
+		 break;
 	 }
 	 this->instruction = instr; 
 	 return instr; 

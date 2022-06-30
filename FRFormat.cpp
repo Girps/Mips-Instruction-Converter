@@ -1,5 +1,10 @@
 #include "FRFormat.h"
 
+/*
+File: FRFormat.cpp define FRFormat type that will inherits members
+of abstract type Format instructionand its function members.
+getInstruction() and printInstr() are overidden.
+*/
 
 /*Intialize memeber with string of numbers converted into bits 
 	dependant on the Base enum */ 
@@ -157,7 +162,7 @@ std::string FRFormat::getInstructions()
 		instr += " , ";
 		instr += this->getFPRegisters(this->fs);
 		break; 
-	case(34):
+	case(36):
 		instr += "cvt.w.";
 		instr += prec;
 		instr += this->getFPRegisters(this->fd);
@@ -167,23 +172,26 @@ std::string FRFormat::getInstructions()
 	case(50): 
 		instr += "c.eq.";
 		instr += prec;
-		instr += this->getFPRegisters(this->fd);
+		instr += this->getFPRegisters(this->fs);
 		instr += " , ";
 		instr += this->getFPRegisters(this->ft);
 		break; 
 	case(60):
 		instr += "c.lt.";
 		instr += prec;
-		instr += this->getFPRegisters(this->fd);
+		instr += this->getFPRegisters(this->fs);
 		instr += " , ";
 		instr += this->getFPRegisters(this->ft);
 		break; 
 	case(62):
 		instr += "c.le.";
 		instr += prec;
-		instr += this->getFPRegisters(this->fd);
+		instr += this->getFPRegisters(this->fs);
 		instr += " , ";
 		instr += this->getFPRegisters(this->ft);
+		break; 
+	default :
+		throw unKnownFRFormatInstruction();
 		break; 
 	}
 	return instr; 
