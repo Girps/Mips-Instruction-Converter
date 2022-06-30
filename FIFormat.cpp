@@ -6,8 +6,6 @@
 FIFormat::FIFormat(const std::string &nums, Base baseArg)
 	:IFormat(nums, baseArg), fmt{ rt }, ft{rs}
 {
-	// initialize distinct fields
-	instruction = getInstructions(); 
 }
 
 FIFormat::~FIFormat() {}
@@ -49,6 +47,6 @@ void FIFormat::printInstr()
 		<< this->op << "|" <<  this->fmt << "|" << this->ft << "|" << this->immediate <<
 		"\nFI-format\n" << "op == " << this->op << "\n" << "fmt == " << this->fmt << "\n" <<
 		"ft == " << this->ft << "\nimmediate == " << this->immediate << "\n" <<
-		"Instruction: " << this->instruction;
+		"Instruction: " << getInstructions();
 
 }

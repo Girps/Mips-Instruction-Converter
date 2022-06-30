@@ -9,17 +9,11 @@ getInstruction() and printInstr() are overidden.
 /*Intialize memeber with string of numbers converted into bits 
 	dependant on the Base enum */ 
 FRFormat::FRFormat(const std::string &num, Base baseArg)
-	:FormatInstruction(num,baseArg)
+	:RFormat(num, baseArg), fmt{ rs }, ft{ rt }, fs{rd}
+	, fd{shamt}
 {
 	// initalize floating point fields 
 	std::string bits = this->bitfields;
-	// Initlalize bitfields of mips instruction
-	fmt = bitfields.substr(6, 5); // determines precision
-	ft = bitfields.substr(11, 5);
-	fs = bitfields.substr(16, 5);
-	fd = bitfields.substr(21, 5);
-	funct = bitfields.substr(26, 6);
-	instruction = getInstructions();
 }
 
 // Destructor  
@@ -32,7 +26,7 @@ std::string FRFormat::getInstructions()
 	int func_Int = std::stoi(funct, nullptr, 2);
 	int var = 0;
 	// Get precision
-	std::string prec = ((std::stoi(this->fmt, nullptr, 2) - 17)) ?
+	std::string prec = ((std::stoi(fmt, nullptr, 2) - 17)) ?
 		("s ") : ("d "); 
 
 	std::string instr;
@@ -202,7 +196,7 @@ void FRFormat::printInstr()
 {
 	std::cout << "Number:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
 		<< this->op << "|" << this->fmt << "|" << this->fs << "|" << this->ft << "|" << this->fd << "|" << this->funct
-		<< "\n" << "FR-format\n" << "op == " << this->op << "\n" << "fmt == " << this->fmt <<
+		 << "\nFR-format\n" << "op == " << this->op << "\n" << "fmt == " << this->fmt <<
 		"\nfs == " << this->fs << "\n" << "ft == " << this->ft << "\n" << "fd == " << this->fd 
-		<< "\nfunct == " << this->funct << "\n" << "Instruction: " << this->instruction;
+		<< "\nfunct == " << this->funct << "\n" << "Instruction: " << getInstructions();
 };

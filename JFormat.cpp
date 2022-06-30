@@ -15,7 +15,6 @@ JFormat::JFormat(const std::string& digits, Base baseArg)
 {
 	// Initalize J Format fields
 	immediate = this->bitfields.substr(6,26); 
-	this->instruction = getInstructions();
 }
 
 JFormat::~JFormat() {}
@@ -27,7 +26,7 @@ void JFormat::printInstr()
 		<< this->op << "|" << this->immediate << "\n" << "J-format\n" << "op == " << this->op << "\n"
 		<< "Immediate == " << this->immediate << "\nDec Immediate == " << std::stoi(this->immediate, nullptr, 2)
 		<< "\nMultiply by 4 or SLL by 2 immediate == " << (std::stoi(this->immediate, nullptr, 2) * 4)
-		<< "\n" << "Instruction: " << this->instruction;
+		<< "\n" << "Instruction: " << getInstructions();
 }
 
 /*String returning overrided memberfunction checks memebers and returns instruction and its immediate*/

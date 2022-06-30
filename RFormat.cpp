@@ -21,7 +21,6 @@ RFormat::RFormat(const std::string &nums,Base baseArg)
 	rd = bitfields.substr(16,5);
 	shamt = bitfields.substr(21, 5);
 	funct = bitfields.substr(26, 6); 
-	instruction = getInstructions(); 
 }
 
 // Destructor
@@ -271,8 +270,7 @@ RFormat::~RFormat() {}
 	 default: // unknownFunction bit field
 		 throw unKnownRFunction();
 		 break;
-	 }
-	 this->instruction = instr; 
+	 } 
 	 return instr; 
 }
 
@@ -284,5 +282,5 @@ RFormat::~RFormat() {}
 		 << "|" << this->funct << "\n" << "R-format\n" <<"op == " << this->op << "\n" <<
 		 "rs == " << this->rs << "\n" << "rt == " << this->rt
 		 << "\n" << "rd == " << this->rd << "\n" << "shamt == " << this->shamt
-		 << "\nfunct == " << this->funct << "\n" << "Instruction: " << this->instruction; 
+		 << "\nfunct == " << this->funct << "\n" << "Instruction: " << getInstructions();
  }

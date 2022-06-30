@@ -15,7 +15,6 @@ IFormat::IFormat(const std::string &digits, Base baseArg)
 	rs = bitfields.substr(6, 5);
 	rt = bitfields.substr(11, 5);
 	immediate = bitfields.substr(16,16);
-	instruction = getInstructions();
 }
 
 IFormat::~IFormat() {}
@@ -23,11 +22,12 @@ IFormat::~IFormat() {}
 /* Print I Format instructions*/
 void IFormat::printInstr() 
 {
+	
 	std::cout << "\nNumber:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
 		<< this->op << "|" << this->rs << "|" << this->rt << "|" << this->immediate <<
 		"\nI-format\n" << "op == " << this->op << "\n" << "rs == " << this->rs << "\n" << 
 		"rt == " << this->rt << "\nimmediate == " << this->immediate << "\n" <<
-		"Instruction: " << this->instruction;
+		"Instruction: " << getInstructions();
 
 }
 

@@ -37,6 +37,7 @@ FormatInstruction::FormatInstruction(const std::string &nums, Base baseArgs)
 	op = bitfields.substr(0,6); 
 }
 
+//Format Instruction destructor
 FormatInstruction::~FormatInstruction() {}
 
 /* Void setter function sets bitfield memeber to paramterized string */
@@ -392,74 +393,7 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 	} // Other bit value is IFormat
 	else
 	{
-		Form type = IForm; 
-		switch (opcode)
-		{
-		case(4):
-			type = IForm;
-			break;
-		case(5):
-			type = IForm;
-			break;
-		case(6):
-			type = IForm;
-			break;
-		case(7):
-			type = IForm;
-			break;
-		case(8):
-			type = IForm;
-			break;
-		case(9):
-			type = IForm;
-			break;
-		case(10):
-			type = IForm;
-			break;
-		case(11):
-			type = IForm;
-			break;
-		case(12):
-			type = IForm;
-			break;
-		case(13):
-			type = IForm;
-			break;
-		case(14):
-			type = IForm;
-			break;
-		case(15):
-			type = IForm;
-			break;
-		case(32):
-			type = IForm;
-			break;
-		case(33):
-			type = IForm;
-			break;
-		case(35):
-			type = IForm;
-			break;
-		case(36):
-			type = IForm;
-			break;
-		case(37):
-			type = IForm;
-			break;
-		case(40):
-			type = IForm;
-			break;
-		case(41):
-			type = IForm;
-			break;
-		case(43):
-			type = IForm;
-			break;
-		default: // throw error
-			unKnownBitField();
-			break;
-		}
-		return type; 
+		return IForm; 
 	}
 }
 

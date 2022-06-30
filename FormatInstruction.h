@@ -29,7 +29,6 @@ class FormatInstruction
 		std::string op;
 		std::string digits; 
 		std::string bitfields;
-		std::string instruction; 
 		// Protected function memebers
 		void convertToBits(const std::string &digits); 
 		void hextToBits(const std::string& digts); 

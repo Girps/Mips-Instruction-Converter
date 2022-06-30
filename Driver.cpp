@@ -1,11 +1,12 @@
 #include <iostream>
+#include <memory>
 #include "FormatInstruction.h"
 #include "RFormat.h"
 #include "JFormat.h"
 #include "IFormat.h"
 #include "FRFormat.h"
 #include "FIFormat.h"
-#include <memory>
+
 /*
 	Author: Jesse Jimenez
 	Date: 6/27/2022
