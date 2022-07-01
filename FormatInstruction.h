@@ -9,9 +9,18 @@
 	seqeunce of 8 digit Hex or 32 Binary digits.  
 */
 
-struct notEightDigits {};
-struct unKnownBase {};
-struct unKnownBitField {};
+struct invalidDigits : public std::runtime_error
+{
+	invalidDigits(const char* msgArg);
+};
+struct unKnownBase : public std::runtime_error
+{
+	unKnownBase(const char* msgArg);
+};
+struct unKnownBitField: public std::runtime_error
+{
+	unKnownBitField(const char* msgArg);
+};
 
 enum Base {Binary, Hex};
 enum Form {RForm,JForm, IForm,FRForm, FIForm};

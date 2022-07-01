@@ -19,6 +19,13 @@ IFormat::IFormat(const std::string &digits, Base baseArg)
 
 IFormat::~IFormat() {}
 
+
+unKnownIInstruction::unKnownIInstruction(const char* msgArg) 
+	:std::runtime_error(msgArg)
+{ 
+	
+}
+
 /* Print I Format instructions*/
 void IFormat::printInstr() 
 {
@@ -349,7 +356,7 @@ std::string IFormat::getInstructions()
 		instr += ")";
 		break;
 	default: // throw error
-		struct unKnownIInstruction();
+		struct unKnownIInstruction("Unknown IFormat instruction");
 		break; 
 	}
 	return instr; 
@@ -415,7 +422,7 @@ std::string IFormat::getHex(int num)
 			temp.push_back('F');
 			break;
 		default:
-			throw unKnownBase();
+			throw unKnownBase("Failed to convert decimal to hex!");
 			break;
 		}
 	}

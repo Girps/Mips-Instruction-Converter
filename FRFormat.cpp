@@ -19,6 +19,11 @@ FRFormat::FRFormat(const std::string &num, Base baseArg)
 // Destructor  
 FRFormat::~FRFormat() {}
 
+unKnownFRFormatInstruction::unKnownFRFormatInstruction(const char* msgArg)
+	:std::runtime_error(msgArg)
+{
+}
+
 /*string returning function converts bit fields into floating point instruction 
 	returns as string*/ 
 std::string FRFormat::getInstructions()
@@ -185,7 +190,7 @@ std::string FRFormat::getInstructions()
 		instr += this->getFPRegisters(this->ft);
 		break; 
 	default :
-		throw unKnownFRFormatInstruction();
+		throw unKnownFRFormatInstruction("Uknown FR format instruction!");
 		break; 
 	}
 	return instr; 

@@ -19,17 +19,17 @@ FormatInstruction::FormatInstruction(const std::string &nums, Base baseArgs)
 	case(Hex): 
 		if (nums.size() != 8 && nums.size() != 10 ) 
 		{
-			throw unKnownBase();
+			throw unKnownBase("Not a valid 8 digit hex number!");
 		}
 		break; 
 	case(Binary):
 		if (nums.size() != 32)
 		{
-			throw unKnownBase();
+			throw unKnownBase("Not a valid 32-bit binary number!");
 		}
 		break; 
 	default: 
-		throw unKnownBase(); 
+		throw unKnownBase("Uknown base number!");
 		break; 
 	}
 	// Call protected functions initalize rest of memebers
@@ -40,6 +40,19 @@ FormatInstruction::FormatInstruction(const std::string &nums, Base baseArgs)
 //Format Instruction destructor
 FormatInstruction::~FormatInstruction() {}
 
+unKnownBitField::unKnownBitField(const char* msgArg)
+	:std::runtime_error(msgArg)
+{
+}
+
+unKnownBase::unKnownBase(const char* msgArg)
+	: std::runtime_error(msgArg)
+{
+}
+invalidDigits::invalidDigits(const char* msgArg)
+	: std::runtime_error(msgArg)
+{
+}
 /* Void setter function sets bitfield memeber to paramterized string */
 void FormatInstruction::convertToBits(const std::string &nums ) 
 { 
@@ -53,7 +66,7 @@ void FormatInstruction::convertToBits(const std::string &nums )
 			 hextToBits(nums);
 			break; 
 		default: 
-			throw unKnownBase(); 
+			throw unKnownBase("Unknown base number!");
 			break; 
 	}
 }
@@ -123,7 +136,7 @@ void FormatInstruction::hextToBits(const std::string &hexString)
 			bits.append("1111");
 				break;
 		default: // Error 
-			throw unKnownBitField();
+			throw unKnownBitField("No corresponding bit field matched!");
 				break; 
 		}
 	}
@@ -138,7 +151,7 @@ std::string FormatInstruction::getFPRegisters(const std::string& bits)
 	// 32-bit Mips registers are 5 bits 
 	if (bits.size() != 5)
 	{
-		throw unKnownBitField();
+		throw unKnownBitField("Not a 5 bit fp register field!");
 	}
 
 	int regValue{ 0 };
@@ -244,7 +257,7 @@ std::string FormatInstruction::getFPRegisters(const std::string& bits)
 		return "$f31";
 		break;
 	default:	// throw an exception
-		throw unKnownBitField();
+		throw unKnownBitField("Field register not found!");
 		break;
 	}
 }
@@ -256,7 +269,7 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 	// 32-bit Mips registers are 5 bits 
 	if (bits.size() != 5) 
 	{
-		throw unKnownBitField(); 
+		throw unKnownBitField("Not a 5 bit field!");
 	}
 
 	int regValue{ 0 }; 
@@ -362,7 +375,7 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 		return "$ra";
 		break;
 	default:	// throw an exception
-		throw unKnownBitField(); 
+		throw unKnownBitField("Not a 5 bit fp register!");
 		break;
 	}
 }
@@ -391,10 +404,17 @@ std::string FormatInstruction::getRegisters(const std::string &bits)
 	{
 		return JForm;
 	} // Other bit value is IFormat
-	else
+	else if((opcode >= 4 && opcode <= 15) ||
+			(opcode >= 32 && opcode <= 38) || 
+			(opcode >= 40 && opcode <= 43) || 
+			(opcode == 46) || (opcode >= 48 && 
+			 opcode<= 49) || (opcode == 53) || 
+			(opcode >= 56 && opcode <= 57) || 
+			opcode == 61)
 	{
 		return IForm; 
 	}
+	else { throw unKnownBitField("Unknown Opcode field"); }
 }
 
 /*string returning free function converts integers into a sequence of Hex digits 
@@ -464,7 +484,7 @@ std::string hextToBits(const std::string & nums)
 			bits.append("1111");
 			break;
 		default: // Error 
-			throw unKnownBitField();
+			throw unKnownBitField("Not corresponding bit field matched!");
 			break;
 		}
 	}

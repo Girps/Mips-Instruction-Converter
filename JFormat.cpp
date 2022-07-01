@@ -19,6 +19,11 @@ JFormat::JFormat(const std::string& digits, Base baseArg)
 
 JFormat::~JFormat() {}
 
+unKnownJinstruction::unKnownJinstruction(const char* msgArg)
+	:std::runtime_error(msgArg)
+{
+}
+
 /*Void overried member function prints J Format instruction*/
 void JFormat::printInstr()
 {
@@ -50,7 +55,7 @@ std::string JFormat::getInstructions()
 		instr += "label"; 
 		break; 
 	default: 
-		throw unknownJOp(); 
+		throw unKnownJinstruction("Unknown J format instruction!");
 		break;
 	}
 	return instr; 
@@ -117,7 +122,7 @@ std::string JFormat::getHex(int num)
 			temp.push_back('F');
 			break; 
 		default: 
-			throw unKnownBase(); 
+			throw unKnownBase("Failed to convert decimal to hex!");
 			break; 
 		}
 	}

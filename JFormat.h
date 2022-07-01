@@ -11,7 +11,10 @@
 */ 
 
 
-struct unknownJOp {}; 
+struct unKnownJinstruction:public std::runtime_error
+{
+	unKnownJinstruction(const char* msgArg); 
+}; 
 
 class JFormat :public FormatInstruction 
 {

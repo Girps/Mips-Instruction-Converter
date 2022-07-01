@@ -93,10 +93,15 @@ int main()
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 			} while (sent == 0);
+		} // catch struct excpetions 
+		catch (std::runtime_error &e) 
+		{
+			std::cerr << e.what(); 
+			return 1; 
 		}
 		catch (...) 
 		{
-			std::cout << "Exception caught!\n"; 
+			std::cerr << "Some exception caught!\n"; 
 			return 1; 
 		}
 		return 0; 

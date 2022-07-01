@@ -10,6 +10,11 @@ FIFormat::FIFormat(const std::string &nums, Base baseArg)
 
 FIFormat::~FIFormat() {}
 
+
+unKnownFIInstruction::unKnownFIInstruction(const char* msgArg)
+	:std::runtime_error(msgArg)
+{
+}
 /* string returning function converts bit fields into 
 	Floating point I instruction*/
 std::string FIFormat::getInstructions()
@@ -33,7 +38,7 @@ std::string FIFormat::getInstructions()
 		instr += "\nbc1f label"; 
 		break; 
 	default: 
-		throw unKnownFIInstruction(); 
+		throw unKnownFIInstruction("Unknown FI format instruction ");
 		break; 
 	}
 	return instr; 

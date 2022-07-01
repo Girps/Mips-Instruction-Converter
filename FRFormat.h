@@ -10,7 +10,10 @@
 	Point R format 32-bit instruction 
 */
 
-struct unKnownFRFormatInstruction {}; 
+struct unKnownFRFormatInstruction: public std::runtime_error
+{
+	unKnownFRFormatInstruction(const char* msgArg); 
+}; 
 
 class FRFormat: public RFormat
 {

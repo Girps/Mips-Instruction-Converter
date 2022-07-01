@@ -12,7 +12,10 @@
 */
 
 
-struct unKnownFIInstruction {};
+struct unKnownFIInstruction:public std::runtime_error 
+{
+	unKnownFIInstruction(const char* msgArg); 
+};
 
 /*
 	FIFormat inheirts from IFormat

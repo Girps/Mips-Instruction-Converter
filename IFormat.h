@@ -11,7 +11,10 @@
 	that determine the string instruction sequence. 
 */
 
-struct unKnownIInstruction {}; 
+struct unKnownIInstruction : public std::runtime_error
+{
+	unKnownIInstruction(const char* msgArg); 
+}; 
 
 enum AddressMode {ImmediateAddressing,BaseAddressing,RelativeAddress};
 

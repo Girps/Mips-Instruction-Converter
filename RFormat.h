@@ -11,7 +11,10 @@
 */
 
 
-struct unKnownRFunction {};
+struct unKnownRFunction:public std::runtime_error
+{
+	unKnownRFunction(const char* msgArg);
+};
 
 /* Derived RFormat class inherits from abstract base class 
 	FormatInstruction */ 

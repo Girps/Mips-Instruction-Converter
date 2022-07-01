@@ -26,6 +26,11 @@ RFormat::RFormat(const std::string &nums,Base baseArg)
 // Destructor
 RFormat::~RFormat() {}
 
+unKnownRFunction::unKnownRFunction(const char* msgArg)
+	:std::runtime_error(msgArg)
+{
+}
+
 /*Overidden string returning funciton, checks funct code instructions and returns its instruction*/ 
  std::string RFormat::getInstructions() 
 {
@@ -268,7 +273,7 @@ RFormat::~RFormat() {}
 		 instr += this->getRegisters(this->rt);
 		 break;
 	 default: // unknownFunction bit field
-		 throw unKnownRFunction();
+		 throw unKnownRFunction("Unknown R Format instruction!");
 		 break;
 	 } 
 	 return instr; 
