@@ -16,8 +16,6 @@ struct unKnownIInstruction : public std::runtime_error
 	unKnownIInstruction(const char* msgArg); 
 }; 
 
-enum AddressMode {ImmediateAddressing,BaseAddressing,RelativeAddress};
-
 /* Derived class IFormat declaration inherits from abstract
 	base class FormatInstruction*/
 class IFormat : public FormatInstruction
@@ -29,8 +27,8 @@ class IFormat : public FormatInstruction
 	std::string rt;
 	std::string rs;
 	std::string immediate;
-	int convertImmediate(AddressMode arg ); 
-	std::string getHex(int num);
+	int convertImmediate( ); 
+	std::string numsToBits(int nums); 
 	public:
 		IFormat(const std::string &digits, Base baseArg); 
 		virtual ~IFormat();

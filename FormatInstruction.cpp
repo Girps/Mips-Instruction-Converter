@@ -63,86 +63,13 @@ void FormatInstruction::convertToBits(const std::string &nums )
 			this->bitfields = nums;
 			break; 
 		case(1):	// Hex
-			 hextToBits(nums);
+			 this->bitfields = hextToBits(nums);
 			break; 
 		default: 
 			throw unKnownBase("Unknown base number!");
 			break; 
 	}
 }
-
-/*Void setter function sets bitfields members to binary dights converted from hex sequence nums*/
-void FormatInstruction::hextToBits(const std::string &hexString)
-{
-	std::string bits;
-	std::string temp = hexString;
-	// If size 10 remove first two chars 
-	if (temp.size() == 10)
-	{
-		temp.erase(0, 1);
-		temp.erase(0, 1);
-	}
-	// Convert 8 digit hexdecimal value to 32 bit instruciton
-	for (auto it = temp.begin(); it != temp.end(); ++it) 
-	{
-		switch (std::toupper(*it)) 
-		{
-		case('0'):
-			bits.append("0000");
-				break; 
-		case('1'):
-			bits.append("0001");
-				break;
-		case('2'):
-			bits.append("0010");
-				break; 
-		case('3'):
-			bits.append("0011");
-				break; 
-		case('4'):
-			bits.append("0100");
-				break;
-		case('5'):
-			bits.append("0101");
-				break; 
-		case('6'):
-			bits.append("0110");
-				break;
-		case('7'):
-			bits.append("0111");
-				break; 
-		case('8'):
-			bits.append("1000");
-				break; 
-		case('9'):
-			bits.append("1001");
-				break; 
-		case('A'):
-			bits.append("1010");
-				break; 
-		case('B'):
-			bits.append("1011");
-				break; 
-		case('C'):
-			bits.append("1100");
-				break; 
-		case('D'):
-			bits.append("1101");
-				break;
-		case('E'):
-			bits.append("1110");
-				break; 
-		case('F'):
-			bits.append("1111");
-				break;
-		default: // Error 
-			throw unKnownBitField("No corresponding bit field matched!");
-				break; 
-		}
-	}
-	this->bitfields = (bits); 
-}
-
 
 /*string returning function member converts sequence of bits into a fp register
 	and return as a string */
@@ -489,4 +416,79 @@ std::string hextToBits(const std::string & nums)
 		}
 	}
 	return bits;
+}
+
+/*string returning function converts a string of bits into hex*/
+std::string bitToHex(const std::string &bits ) 
+{
+	std::string temp; 
+	// check if size is 10 to truncate front bits
+	if (bits.size() != 32)
+	{
+		throw invalidDigits("Not 32-bitfield");
+	}
+	// Push prefix
+	temp.push_back('0');
+	temp.push_back('x');
+	
+	// Convert 8 digit hexdecimal value to 32 bit binary sequence
+	for (int i = 0; i < bits.size() - 1; i += 4)
+	{
+		switch (std::stoi(bits.substr(i,4),nullptr,2))
+		{
+		case(0):
+			temp.append("0");
+			break;
+		case(1):
+			 temp.append("1");
+			break;
+		case(2):
+			temp.append("2");
+			break;
+		case(3):
+			temp.append("3");
+			break;
+		case(4):
+			temp.append("4");
+			break;
+		case(5):
+			temp.append("5");
+			break;
+		case(6):
+			temp.append("6");
+			break;
+		case(7):
+			temp.append("7");
+			break;
+		case(8):
+			temp.append("8");
+			break;
+		case(9):
+			temp.append("9");
+			break;
+		case(10):
+			temp.append("A");
+			break;
+		case(11):
+			temp.append("B");
+			break;
+		case(12):
+			temp.append("C");
+			break;
+		case(13):
+			temp.append("D");
+			break;
+		case(14):
+			temp.append("E");
+			break;
+		case(15):
+			temp.append("F");
+			break;
+		default: // Error 
+			throw unKnownBitField("Not corresponding bit field matched!");
+			temp;
+		}
+	}
+	return temp;
+	
 }

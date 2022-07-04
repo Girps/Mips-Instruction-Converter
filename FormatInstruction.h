@@ -40,7 +40,6 @@ class FormatInstruction
 		std::string bitfields;
 		// Protected function memebers
 		void convertToBits(const std::string &digits); 
-		void hextToBits(const std::string& digts); 
 		std::string getRegisters(const std::string& digits);
 		std::string getFPRegisters(const std::string& digits);
 		virtual std::string getInstructions() = 0;
@@ -49,5 +48,5 @@ class FormatInstruction
 /*Free function declarations */
 int getFormat(const std::string& bits);
 std::string hextToBits(const std::string& nums); 
-
+std::string bitToHex(const std::string& bits);
 #endif 

@@ -23,7 +23,6 @@ IFormat::~IFormat() {}
 unKnownIInstruction::unKnownIInstruction(const char* msgArg) 
 	:std::runtime_error(msgArg)
 { 
-	
 }
 
 /* Print I Format instructions*/
@@ -40,17 +39,17 @@ void IFormat::printInstr()
 
 /*string returning functions returns decimal value of immediate bitfield
 	depending on its addressing modes*/ 
-int IFormat::convertImmediate(AddressMode arg) 
+int IFormat::convertImmediate( ) 
 {
 	int exp = 15; 
 	int result = 0; 
 	for (std::string::const_iterator it = immediate.begin();
 			it != immediate.end(); ++it,--exp) 
 	{
-		if (*it == '1' && exp == 15)
+		if ( exp == 15 && *it == '1')
 		{
 			// - (2 ^ (15)) 
-			result += (arg != RelativeAddress) ? (std::pow(2, exp) * -1) : (std::pow(2, exp)); 
+			result += (std::pow(2, exp) * -1);
 		}
 		else if (*it == '1')
 		{
@@ -74,7 +73,7 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rt);
 		instr += ",";
 		instr += "(PC + 4 + "; 
-		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n"; 
 		instr += "beq ";
 		instr += getRegisters(this->rs);
@@ -90,7 +89,7 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rt);
 		instr += ",";
 		instr += "(PC + 4 + ";
-		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
 		instr += "beq ";
 		instr += getRegisters(this->rs);
@@ -106,7 +105,7 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rt);
 		instr += ",";
 		instr += "(PC + 4 + ";
-		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
 		instr += "beq ";
 		instr += getRegisters(this->rs);
@@ -122,7 +121,7 @@ std::string IFormat::getInstructions()
 		instr += getRegisters(this->rt);
 		instr += ",";
 		instr += "(PC + 4 + ";
-		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
 		instr += "beq ";
 		instr += getRegisters(this->rs);
@@ -137,7 +136,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break; 
 	case(9):
 		instr += "addiu ";
@@ -145,7 +144,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break; 
 	case(10):
 		instr += "slti ";
@@ -153,7 +152,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break;
 	case(11):
 		instr += "sltiu ";
@@ -161,7 +160,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break;
 	case(12):
 		instr += "andi ";
@@ -169,7 +168,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break;
 	case(13):
 		instr += "ori ";
@@ -177,7 +176,7 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break;
 	case(14):
 		instr += "xori ";
@@ -185,19 +184,19 @@ std::string IFormat::getInstructions()
 		instr += ",";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break;
 	case(15):
 		instr += "lui ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(ImmediateAddressing));
+		instr += std::to_string(convertImmediate());
 		break;
 	case(32):
 		instr += "lb ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "("; 
 		instr += getRegisters(this->rs); 
 		instr += ")"; 
@@ -206,7 +205,7 @@ std::string IFormat::getInstructions()
 		instr += "lh ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -215,7 +214,7 @@ std::string IFormat::getInstructions()
 		instr += "lwl "; 
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -224,7 +223,7 @@ std::string IFormat::getInstructions()
 		instr += "lw ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -233,7 +232,7 @@ std::string IFormat::getInstructions()
 		instr += "lbu ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -242,7 +241,7 @@ std::string IFormat::getInstructions()
 		instr += "lhu ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -251,7 +250,7 @@ std::string IFormat::getInstructions()
 		instr += "lwr ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -260,7 +259,7 @@ std::string IFormat::getInstructions()
 		instr += "sb ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -269,7 +268,7 @@ std::string IFormat::getInstructions()
 		instr += "sh ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -278,7 +277,7 @@ std::string IFormat::getInstructions()
 		instr += "swl ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -287,7 +286,7 @@ std::string IFormat::getInstructions()
 		instr += "sw ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -296,7 +295,7 @@ std::string IFormat::getInstructions()
 		instr += "swr ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -305,7 +304,7 @@ std::string IFormat::getInstructions()
 		instr += "ll "; 
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -314,7 +313,7 @@ std::string IFormat::getInstructions()
 		instr += "lwc1 ";
 		instr += getFPRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -323,7 +322,7 @@ std::string IFormat::getInstructions()
 		instr += "lwd1 ";
 		instr += getFPRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -332,7 +331,7 @@ std::string IFormat::getInstructions()
 		instr += "sc ";
 		instr += getRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -341,7 +340,7 @@ std::string IFormat::getInstructions()
 		instr += "swc1 ";
 		instr += getFPRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -350,7 +349,7 @@ std::string IFormat::getInstructions()
 		instr += "sdc1 ";
 		instr += getFPRegisters(this->rt);
 		instr += ",";
-		instr += std::to_string(convertImmediate(BaseAddressing));
+		instr += std::to_string(convertImmediate());
 		instr += "(";
 		instr += getRegisters(this->rs);
 		instr += ")";
@@ -362,89 +361,44 @@ std::string IFormat::getInstructions()
 	return instr; 
 }
 
-/* string returing function converts decimal into a string of hex to be returned*/ 
-std::string IFormat::getHex(int num)
+
+/*string returning function, converts an integer to a string of bits */
+std::string IFormat::numsToBits(int nums) 
 {
-	int numbers = 0;
-	int digit = 0;
-	std::string temp;
-	for (numbers = num; numbers != 0; numbers /= 16)
+	std::string bits; 
+	char msb = '0'; 
+	int number = nums; 
+	// int is postive or zero
+	if (std::abs(number) > 0) 
 	{
-		digit = numbers % 16;
-		switch (digit)
+		for (;number != 0; number/=2 ) 
 		{
-		case(0):
-			temp.push_back('0');
-			break;
-		case(1):
-			temp.push_back('1');
-			break;
-		case(2):
-			temp.push_back('2');
-			break;
-		case(3):
-			temp.push_back('3');
-			break;
-		case(4):
-			temp.push_back('4');
-			break;
-		case(5):
-			temp.push_back('5');
-			break;
-		case(6):
-			temp.push_back('6');
-			break;
-		case(7):
-			temp.push_back('7');
-			break;
-		case(8):
-			temp.push_back('8');
-			break;
-		case(9):
-			temp.push_back('9');
-			break;
-		case(10):
-			temp.push_back('A');
-			break;
-		case(11):
-			temp.push_back('B');
-			break;
-		case(12):
-			temp.push_back('C');
-			break;
-		case(13):
-			temp.push_back('D');
-			break;
-		case(14):
-			temp.push_back('E');
-			break;
-		case(15):
-			temp.push_back('F');
-			break;
-		default:
-			throw unKnownBase("Failed to convert decimal to hex!");
-			break;
+			bits += (std::abs(number) % 2)? '1' : '0'; 
 		}
 	}
-
-	// Extend to 8 bit
-	for (int offset = 8 - temp.size(); offset >= temp.size();) 
+	else
 	{
-		temp.push_back('0');
+		bits += "0"; 
 	}
-	// Push prefix 
-	temp.push_back('x');
-	temp.push_back('0');
+	if (nums < 0) { bits += "1"; msb = '1'; }
+	// sign extend and reverse 
+	// get msb 
 
-	// Now reverse a string
+	// Sign extend to 8 digit
+	for (; (bits.size() - 32 ) != 0;)
+	{
+		bits.push_back(msb);
+	}
+
+	// reverse string
 	int i = 0;
-	int j = temp.size() - 1;
+	int j = bits.size() - 1;
 	for (; i < j; ++i)
 	{
-		char c = temp[j];
-		temp[j--] = temp[i];
-		temp[i] = c;
+		char c = bits[j];
+		bits[j--] = bits[i];
+		bits[i] = c;
 	}
 
-	return temp;
+	return bits; 
 }

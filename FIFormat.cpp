@@ -26,14 +26,14 @@ std::string FIFormat::getInstructions()
 	case(1):
 		instr = "bclt ";
 		instr += "(PC + 4 + ";
-		instr += getHex((convertImmediate(RelativeAddress) * 4));
+		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")"; 
 		instr += "\nbc1t label";
 		break; 
 	case(0):
 		instr = "bclf "; 
 		instr += "(PC + 4 + ";
-		instr += getHex((convertImmediate(RelativeAddress) * 4)); 
+		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")"; 
 		instr += "\nbc1f label"; 
 		break; 
