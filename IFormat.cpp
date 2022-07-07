@@ -19,7 +19,6 @@ IFormat::IFormat(const std::string &digits, Base baseArg)
 
 IFormat::~IFormat() {}
 
-
 unKnownIInstruction::unKnownIInstruction(const char* msgArg) 
 	:std::runtime_error(msgArg)
 { 
@@ -56,7 +55,8 @@ std::string IFormat::isTwosComp(const std::string& bits)
 		{
 			(*it) = (*it == '0') ? '1' : '0'; 
 		}
-		return temp; 
+		std::string temp2 = numsToBits((std::stoi(temp, nullptr, 2) + 1)); 
+		return temp + "\n\t\t\t + 1\n\t     " + temp2.substr(16,16) + "\n\t\t\t  " + std::to_string(convertImmediate());
 	}
 };
 
@@ -131,15 +131,11 @@ std::string IFormat::getInstructions()
 		instr += "\nblez ";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += getRegisters(this->rt);
-		instr += ",";
 		instr += "(PC + 4 + ";
 		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
 		instr += "blez ";
 		instr += getRegisters(this->rs);
-		instr += ",";
-		instr += getRegisters(this->rt);
 		instr += ",";
 		instr += "label";
 		break;
@@ -149,15 +145,11 @@ std::string IFormat::getInstructions()
 		instr += "\nbgtz ";
 		instr += getRegisters(this->rs);
 		instr += ",";
-		instr += getRegisters(this->rt);
-		instr += ",";
 		instr += "(PC + 4 + ";
 		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
 		instr += "bgtz ";
 		instr += getRegisters(this->rs);
-		instr += ",";
-		instr += getRegisters(this->rt);
 		instr += ",";
 		instr += "label";
 		break; 
