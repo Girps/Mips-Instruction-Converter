@@ -97,11 +97,17 @@ int main()
 		catch (std::runtime_error &e) 
 		{
 			std::cerr << e.what(); 
+			std::cerr << "\nPress any key to terminate program";
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::getchar(); 
 			return 1; 
 		}
 		catch (...) 
 		{
-			std::cerr << "Some exception caught!\n"; 
+			std::cerr << "Some exception caught!\n";
+			std::cerr << "\nPress any key to terminate program";
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::getchar(); 
 			return 1; 
 		}
 		return 0; 
