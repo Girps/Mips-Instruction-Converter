@@ -126,8 +126,12 @@ std::string JFormat::getHex(int num)
 			break; 
 		}
 	}
-	temp.push_back('0');
-	temp.push_back('0');
+	// Sign extend to 8 digit
+	for (; temp.size() != 8;)
+	{
+		temp.push_back('0');
+	}
+	// Add hex prefix
 	temp.push_back('x');
 	temp.push_back('0');
 

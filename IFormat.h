@@ -29,6 +29,7 @@ class IFormat : public FormatInstruction
 	std::string immediate;
 	int convertImmediate( ); 
 	std::string numsToBits(int nums); 
+	std::string isTwosComp(const std::string &bits); 
 	public:
 		IFormat(const std::string &digits, Base baseArg); 
 		virtual ~IFormat();

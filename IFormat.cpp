@@ -31,11 +31,34 @@ void IFormat::printInstr()
 	
 	std::cout << "\nNumber:" << this->digits << "\n" << "Bits: " << this->bitfields << "\n"
 		<< this->op << "|" << this->rs << "|" << this->rt << "|" << this->immediate <<
-		"\nI-format\n" << "op == " << this->op << "\n" << "rs == " << this->rs << "\n" << 
-		"rt == " << this->rt << "\nimmediate == " << this->immediate << "\n" <<
-		"Instruction: " << getInstructions();
-
+		"\nI-format\n" << "op == " << this->op << "\n" << "rs == " << this->rs << "\n" <<
+		"rt == " << this->rt << "\nimmediate == " << this->immediate << "\nTwos comp == " <<
+		 isTwosComp(this->immediate) << "\nInstruction: " << getInstructions();
 }
+
+/*string returning function returns twos complement representation of a negative 
+	binary digit*/
+std::string IFormat::isTwosComp(const std::string& bits)
+{
+	// Check if 16 bit field is valid
+	if (bits.size() != 16) 
+	{
+		throw unKnownBitField("Not a valid 16 bit immediate field");
+	}
+	else if(bits[0] == '0')
+	{
+		return "Does not apply!"; 
+	}
+	else
+	{
+		std::string temp = bits; 
+		for (auto it = temp.begin(); it != temp.end(); ++it) 
+		{
+			(*it) = (*it == '0') ? '1' : '0'; 
+		}
+		return temp; 
+	}
+};
 
 /*string returning functions returns decimal value of immediate bitfield
 	depending on its addressing modes*/ 
@@ -67,7 +90,9 @@ std::string IFormat::getInstructions()
 	switch (std::stoi(this->op,nullptr,2)) 
 	{
 	case(4):
-		instr += "beq "; 
+		instr += "\nimmediate == " + this->immediate; 
+		instr += "\nsll 2 or multiply immediate by 4"; 
+		instr += "\nbeq "; 
 		instr += getRegisters(this->rs);
 		instr += ",";
 		instr += getRegisters(this->rt);
@@ -83,7 +108,9 @@ std::string IFormat::getInstructions()
 		instr += "label"; 
 		break; 
 	case(5):
-		instr += "bne ";
+		instr += "\nimmediate == " + this->immediate;
+		instr += "\nsll 2 or multiply immediate by 4";
+		instr += "\nbne ";
 		instr += getRegisters(this->rs);
 		instr += ",";
 		instr += getRegisters(this->rt);
@@ -91,7 +118,7 @@ std::string IFormat::getInstructions()
 		instr += "(PC + 4 + ";
 		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
-		instr += "beq ";
+		instr += "bne ";
 		instr += getRegisters(this->rs);
 		instr += ",";
 		instr += getRegisters(this->rt);
@@ -99,7 +126,9 @@ std::string IFormat::getInstructions()
 		instr += "label";
 		break;
 	case(6):
-		instr += "blez ";
+		instr += "\nimmediate == " + this->immediate;
+		instr += "\nsll 2 or multiply immediate by 4";
+		instr += "\nblez ";
 		instr += getRegisters(this->rs);
 		instr += ",";
 		instr += getRegisters(this->rt);
@@ -107,7 +136,7 @@ std::string IFormat::getInstructions()
 		instr += "(PC + 4 + ";
 		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
-		instr += "beq ";
+		instr += "blez ";
 		instr += getRegisters(this->rs);
 		instr += ",";
 		instr += getRegisters(this->rt);
@@ -115,7 +144,9 @@ std::string IFormat::getInstructions()
 		instr += "label";
 		break;
 	case(7):
-		instr += "bgtz ";
+		instr += "\nimmediate == " + this->immediate;
+		instr += "\nsll 2 or multiply immediate by 4";
+		instr += "\nbgtz ";
 		instr += getRegisters(this->rs);
 		instr += ",";
 		instr += getRegisters(this->rt);
@@ -123,7 +154,7 @@ std::string IFormat::getInstructions()
 		instr += "(PC + 4 + ";
 		instr += bitToHex(numsToBits((convertImmediate() * 4)));
 		instr += ")\n";
-		instr += "beq ";
+		instr += "bgtz ";
 		instr += getRegisters(this->rs);
 		instr += ",";
 		instr += getRegisters(this->rt);
@@ -384,8 +415,8 @@ std::string IFormat::numsToBits(int nums)
 	// sign extend and reverse 
 	// get msb 
 
-	// Sign extend to 8 digit
-	for (; (bits.size() - 32 ) != 0;)
+	// Sign extend to 32 bits
+	for (; bits.size() != 32;)
 	{
 		bits.push_back(msb);
 	}
