@@ -51,12 +51,14 @@ std::string IFormat::isTwosComp(const std::string& bits)
 	else
 	{
 		std::string temp = bits; 
+		std::string twosComplementBits = numsToBits((std::stoi(temp, nullptr, 2) + 1));
 		for (auto it = temp.begin(); it != temp.end(); ++it) 
 		{
 			(*it) = (*it == '0') ? '1' : '0'; 
 		}
-		std::string temp2 = numsToBits((std::stoi(temp, nullptr, 2) + 1)); 
-		return temp + "\n\t\t\t + 1\n\t     " + temp2.substr(16,16) + "\n\t\t\t  " + std::to_string(convertImmediate());
+		return temp + "\n\t\t\t + 1\n\t     " + 
+			twosComplementBits.substr(16,16) + "\n\t\t\t  " +
+			std::to_string(convertImmediate());
 	}
 };
 
