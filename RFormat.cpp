@@ -97,10 +97,28 @@ unKnownRFunction::unKnownRFunction(const char* msgArg)
 		 instr += this->getRegisters(this->rs); 
 		 // second variant
 		 instr += "\n"; 
-		 instr += "jalr"; 
+		 instr += "jalr "; 
 		 instr += this->getRegisters(this->rd);
 		 instr += " , "; 
 		 instr += this->getRegisters(this->rs); 
+		 break; 
+	 case(10):
+		 instr += "movz ";
+		 instr += this->getRegisters(this->rd);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rs); 
+		 instr += " , ";
+		 instr += this->getRegisters(this->rt);
+		
+		 
+		 break; 
+	 case(11): 
+		 instr += "movn ";
+		 instr += this->getRegisters(this->rd);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rs);
+		 instr += " , ";
+		 instr += this->getRegisters(this->rt);
 		 break; 
 	 case(12):	
 		 instr = "syscall"; 

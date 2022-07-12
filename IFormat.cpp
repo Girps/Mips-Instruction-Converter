@@ -51,14 +51,12 @@ std::string IFormat::isTwosComp(const std::string& bits)
 	else
 	{
 		std::string temp = bits; 
-		std::string twosComplementBits = numsToBits((std::stoi(temp, nullptr, 2) + 1));
 		for (auto it = temp.begin(); it != temp.end(); ++it) 
 		{
 			(*it) = (*it == '0') ? '1' : '0'; 
 		}
-		return temp + "\n\t\t\t + 1\n\t     " + 
-			twosComplementBits.substr(16,16) + "\n\t\t\t  " +
-			std::to_string(convertImmediate());
+		std::string twosComplementBits = numsToBits((std::stoi(temp, nullptr, 2) + 1));
+		return temp + "\n\t\t\t  + 1\n\t     " + twosComplementBits.substr(16,16) + "\n\t\t\t  " + std::to_string(convertImmediate());
 	}
 };
 
@@ -391,38 +389,50 @@ std::string IFormat::getInstructions()
 std::string IFormat::numsToBits(int nums) 
 {
 	std::string bits; 
-	char msb = '0'; 
+	std::string msb = (nums > 0) ? ("0") : ("1"); 
 	int number = nums; 
-	// int is postive or zero
-	if (std::abs(number) > 0) 
-	{
-		for (;number != 0; number/=2 ) 
-		{
-			bits += (std::abs(number) % 2)? '1' : '0'; 
-		}
-	}
-	else
+	if(nums == 0)
 	{
 		bits += "0"; 
 	}
-	if (nums < 0) { bits += "1"; msb = '1'; }
-	// sign extend and reverse 
-	// get msb 
+	else 
+	{
+		for (; number != 0; number /= 2)
+		{
+			bits.insert(0, (std::abs(number) % 2) ? "1" : "0");
+		}
+	}
+	
+	// zero extend to 16 bits
+	for (; bits.size() != 16;)
+	{
+		bits.insert(0, "0");
+	}
+
+	// if negative 
+	if (nums < 0) 
+	{
+		std::string negStr; 
+		// Negative each char 
+		for (auto it = bits.rbegin(); it != bits.rend(); ++it)
+		{
+			*it = (*it == '0') ? '1' : '0';
+		}
+		// Add 1 
+		int temp = std::stoi(bits,nullptr,2); 
+		++temp; 
+		// turn it into string
+		for (number = temp; number != 0; number /= 2)
+		{
+			negStr.insert(0, (std::abs(number) % 2) ? "1" : "0");
+		}
+		bits = negStr; 
+	}
 
 	// Sign extend to 32 bits
 	for (; bits.size() != 32;)
 	{
-		bits.push_back(msb);
-	}
-
-	// reverse string
-	int i = 0;
-	int j = bits.size() - 1;
-	for (; i < j; ++i)
-	{
-		char c = bits[j];
-		bits[j--] = bits[i];
-		bits[i] = c;
+		bits.insert(0, msb); 
 	}
 
 	return bits; 

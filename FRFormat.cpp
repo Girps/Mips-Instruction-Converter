@@ -29,10 +29,23 @@ unKnownFRFormatInstruction::unKnownFRFormatInstruction(const char* msgArg)
 std::string FRFormat::getInstructions()
 {
 	int func_Int = std::stoi(funct, nullptr, 2);
+	int fmt_Int = std::stoi(fmt, nullptr, 2); 
 	int var = 0;
-	// Get precision
-	std::string prec = ((std::stoi(fmt, nullptr, 2) - 17)) ?
-		("s ") : ("d "); 
+	std::string prec;
+	// get prec
+	if (fmt_Int == 17) 
+	{
+		prec = "d "; 
+	}
+	else if (fmt_Int == 16) 
+	{
+		prec = "s "; 
+	}
+	else 
+	{
+		prec = "w ";
+	}
+
 
 	std::string instr;
 	switch (func_Int) 
