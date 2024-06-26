@@ -1,0 +1,41 @@
+
+body
+{
+  background-color: rgb(63, 63, 63);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.specialFooter{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+  position: auto; 
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  height: 125px;
+}
+
+.specialFooter .specialFooter-image {
+  max-width: 8%;
+  height: auto; 
+  border-radius: 50%;
+  margin-bottom: 1px;
+  cursor: pointer;
+
+}
+
+.InputHeader .InputHeader-title{
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.InputHeader .ConvertSection{
+  margin-top: 20px;
+}
+
+.InputHeader .ConvertButton{
+  font-size: x-large;
+  font-weight: lighter;
+
+}
